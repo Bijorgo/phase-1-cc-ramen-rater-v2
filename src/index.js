@@ -14,39 +14,27 @@ const addSubmitListener = document.addEventListener("submit", (event => {
 
 const displayRamens = () => {
   fetch("http://localhost:3000/ramens") // requests data from server to get all ramen objects, NO ; HERE
-  .then((response) => response.json()) // if connection sucessful, then take info and turn it into json
-  .then((ramenData) => {
-        //console.log(ramenData)
-    //need to create forEach loop
-    const ramens = ramenData//[0].image
-    
-    ramens.forEach(element => {
-          //console.log(element + "How Many?") //5
 
+  .then((response) => response.json()) // if connection sucessful, then take info and turn it into json
+
+  .then((ramenData) => {
+    const ramens = ramenData
+      // This next forEach loop will display the img of each ramen in ramens inside of <div id="ramen-menu">
+    ramens.forEach(element => {
           // Create -> modify -> append
       const ramenMenu = document.querySelector("#ramen-menu")
       const ramenMenuItem = document.createElement("img")
-      
-      //console.log(ramenMenu + "First")
-        //create <img>
-        // now, we want to select "image" and take value, append to <img>
+        //create <img> tag
     ramenMenuItem.src = element.image
+        // set src for new <img> to the image key of each element
     ramenMenu.append(ramenMenuItem)
-      
-      //ramenMenu.append.ramenMenuItem
-      
-        // display image for each ramen using and <img> tag inside <div id="ramen-menu">
-    });
-        //console.log(ramenImg)
-    // we will need to do something with that data here
-    // traverse objects to find img
-    
-
+        // append ramenMenuItem, which is now displays the img of each element, as a child of #ramen-menu
+    }); // closes .forEach loop
   }) //closes .then(ramenData) 
 
   .catch(error => {console.error(error)});
   
-}; // closes displayRamens declaration
+}; // closes displayRamens declaration which holds fetch request and img display
 
 const main = () => {
   // Invoke displayRamens here
