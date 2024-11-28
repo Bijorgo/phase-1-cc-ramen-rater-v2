@@ -1,24 +1,12 @@
 // index.js
 document.addEventListener("DOMContentLoaded", event => {
-  //main ();
-  //displayRamens();
-
-
-  
 
 // Callbacks
 const handleClick = (ramenData) => {
-  //const ramenMenuDiv = document.querySelector("#ramen-menu")
-  //console.log(ramenMenuDiv)
-    // This next forEach loop will display the img of each ramen in ramens inside of <div id="ramen-menu">
-    //ramenData.forEach(element => {
-      // Create -> modify -> append          
-    //take img and set more information // we want name, restaurant, rating, and comment
-    // set text of name
-    //const ramenMenu = document.querySelector("#ramen-menu");
+    // this callback function handles organizing data to appear in #ramen-detail when called 
+    //set name
     const ramenNameClass = document.querySelector('.name');
     ramenNameClass.textContent = ramenData.name;
-
     //set img
     const ramenImgClicked = document.querySelector('.detail-image');
     ramenImgClicked.src = ramenData.image;
@@ -31,72 +19,49 @@ const handleClick = (ramenData) => {
     //set comment 
     const ramenCommentClick = document.querySelector("#comment-display");
     ramenCommentClick.textContent = ramenData.comment;
-  //});
-    
-  // when an img from #ramen-menu is clicked, display all info in #ramen-detail div (insert comment and instert rating here)
 
 }; // closes handleClick declaration
-
-
-
-
-
-
 
 const addSubmitListener = document.addEventListener("submit", (event => {
   event.preventDefault();
 })); // closes addSubmitListener declaration
 
 
-
-
-
-
-
-
 const displayRamens = function(ramenData) {
-    //then display ramens w/ <img> in div #ramen-menu
+    //handle data to display ramens w/ <img> in div #ramen-menu
   const ramenMenu = document.querySelector("#ramen-menu");
   const ramenMenuImg = document.createElement("img");
   ramenMenuImg.src = ramenData.image
-   
   ramenMenu.append(ramenMenuImg);
     // append ramenMenuImg, which is now displays the img of each element, as a child of #ramen-menu
-    // Take ramen-detail and show img in div #ramen-menu
   ramenMenuImg.addEventListener("click", (event) => {
+    // add event listener here to listen for clicks on individual images and keep data together
     handleClick(ramenData)
+    // callback function sets information to correct tags in #ramen-datail
   }); //closes event listener  
-};
+}; // closes displayRamens
 
-
+const main = function() {
   fetch("http://localhost:3000/ramens")
-    
+    // retrieve data from API
   .then(response => {
     return response.json();
+    // parse data to JavaScript Object
   })
   .then(ramenData => {
+    // start using data from API
     ramenData.forEach(element => {
       displayRamens(element);
-    })
-    
- 
-  });
+      // iterate over object and run displayRamens to start displaying imgs in #ramen-menu
+    }) //closes forEach
+  }); //closes last .then, finished using data
 
+//addSubmitListener call will go here
 
+};//closes main function
 
-
-
-  
-  
-//}; // closes displayRamens declaration which holds fetch request and img display
-
-/*
-function main() { 
-  displayRamens();
-  //addSubmitListener();
- 
-}; //closes main function
-*/
+main(); 
+// calls main function so it runs after DOM is loaded
 
 }); // closes DOMContentLoaded event listener 
 
@@ -146,6 +111,8 @@ fetch("http://localhost:3000/ramens")
 // attach event listener to new-ramen form using addSubmitListener
 // after a submit, add it to #ramen-menu div
 // OK if it goes away on refresh
+
+
 
 //json-server db.json or modify path
 
