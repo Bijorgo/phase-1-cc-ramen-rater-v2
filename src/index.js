@@ -23,35 +23,33 @@ const handleClick = (ramenData) => {
 }; // closes handleClick declaration
 
 const addSubmitListener = function(){
+
   const newRamenForm = document.querySelector("#new-ramen");
+
   newRamenForm.addEventListener("submit", (event => {
-  event.preventDefault();
-  // OK if it goes away on refresh
+    event.preventDefault();
+    // take form info(as an object), pass through displayRamens() to add to menu
+    displayRamens({
+      "name": event.target['name'].value,
+      "restaurant": event.target['new-restaurant'].value,
+      "image": event.target['new-image'].value,
+      "rating": event.target['new-rating'].value,
+      "comment": event.target['new-comment'].value,
+    }); // close displayRamens with object passed
 
-  //const take information in the form
-  //use form's information to set new information in #ramen-detail, rating, and comment
-    //add img to div #ramen-menu and make it clickable somehow 
 
-  
-  
-  // store information from form in a variable for each input
-  const newRamenName = document.querySelector("#new-name");
-  const newRamenRest = document.querySelector("#new-restaurant");
-  const newRamenImg = document.querySelector("#new-image");
-  const newRamenRating = document.querySelector("#new-rating");
-  const newRamenComment = document.querySelector("#new-comment")
-  
-  // take form information and display in #ramen-deatil
-  const ramenNameDetail = document.querySelector('.name');
-  ramenNameDetail.textContent = newRamenName.value;  
-  const ramenRestDetail = document.querySelector('.restaurant');
-  ramenRestDetail.textContent = newRamenRest.value;
-  const ramenImgDetail = document.querySelector('.detail-image');
-  ramenImgDetail.src = newRamenImg.value;
-  const ramenRatingDetail = document.querySelector("#rating-display");
-  ramenRatingDetail.textContent = newRamenRating.value;
-  const ramenCommentDetail = document.querySelector("#comment-display");
-  ramenCommentDetail.textContent = newRamenComment.value;
+    // take info, pass through handleClick() to display in #ramen-detail-this happens b/c handleClick is called in displayRamens
+
+
+
+
+    //const take information in the form
+    //use form's information to set new information in #ramen-detail, rating, and comment
+      //add img to div #ramen-menu and make it clickable somehow 
+
+
+
+    
   
 
 })); // closes addSubmitListener declaration
@@ -151,6 +149,30 @@ fetch("http://localhost:3000/ramens")
         //add new ramen from form to #ramen-menu div
 
   // to access JSON server: json-server db.json or modify path
+
+
+  // ALT FOR FORM DISPLAY
+  /*
+    
+    // store information from form in a variable for each input
+    const newRamenName = document.querySelector("#new-name");
+    const newRamenRest = document.querySelector("#new-restaurant");
+    const newRamenImg = document.querySelector("#new-image");
+    const newRamenRating = document.querySelector("#new-rating");
+    const newRamenComment = document.querySelector("#new-comment")
+    
+    // take form information and display in #ramen-deatil
+    const ramenNameDetail = document.querySelector('.name');
+    ramenNameDetail.textContent = newRamenName.value;  
+    const ramenRestDetail = document.querySelector('.restaurant');
+    ramenRestDetail.textContent = newRamenRest.value;
+    const ramenImgDetail = document.querySelector('.detail-image');
+    ramenImgDetail.src = newRamenImg.value;
+    const ramenRatingDetail = document.querySelector("#rating-display");
+    ramenRatingDetail.textContent = newRamenRating.value;
+    const ramenCommentDetail = document.querySelector("#comment-display");
+    ramenCommentDetail.textContent = newRamenComment.value;
+    */
 
 
 /*
