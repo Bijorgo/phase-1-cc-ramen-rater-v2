@@ -5,26 +5,57 @@ document.addEventListener("DOMContentLoaded", event => {
 const handleClick = (ramenData) => {
     // this callback function handles organizing data to appear in #ramen-detail when called 
     //set name
-    const ramenNameClass = document.querySelector('.name');
-    ramenNameClass.textContent = ramenData.name;
-    //set img
-    const ramenImgClicked = document.querySelector('.detail-image');
-    ramenImgClicked.src = ramenData.image;
-    //set restaurant
-    const ramenRestClick = document.querySelector('.restaurant');
-    ramenRestClick.textContent = ramenData.restaurant;
-    //set rating
-    const ramenRatingClick = document.querySelector("#rating-display");
-    ramenRatingClick.textContent = ramenData.rating;
-    //set comment 
-    const ramenCommentClick = document.querySelector("#comment-display");
-    ramenCommentClick.textContent = ramenData.comment;
+    const ramenNameDetail = document.querySelector('.name');
+  ramenNameDetail.textContent = ramenData.name;
+  //set img
+  const ramenImgDetail = document.querySelector('.detail-image');
+  ramenImgDetail.src = ramenData.image;
+  //set restaurant
+  const ramenRestDetail = document.querySelector('.restaurant');
+  ramenRestDetail.textContent = ramenData.restaurant;
+  //set rating
+  const ramenRatingDetail = document.querySelector("#rating-display");
+  ramenRatingDetail.textContent = ramenData.rating;
+  //set comment 
+  const ramenCommentDetail = document.querySelector("#comment-display");
+  ramenCommentDetail.textContent = ramenData.comment;
 
 }; // closes handleClick declaration
 
-const addSubmitListener = document.addEventListener("submit", (event => {
+const addSubmitListener = function(){
+  const newRamenForm = document.querySelector("#new-ramen");
+  newRamenForm.addEventListener("submit", (event => {
   event.preventDefault();
+  // OK if it goes away on refresh
+
+  //const take information in the form
+  //use form's information to set new information in #ramen-detail, rating, and comment
+    //add img to div #ramen-menu and make it clickable somehow 
+
+  
+  
+  // store information from form in a variable for each input
+  const newRamenName = document.querySelector("#new-name");
+  const newRamenRest = document.querySelector("#new-restaurant");
+  const newRamenImg = document.querySelector("#new-image");
+  const newRamenRating = document.querySelector("#new-rating");
+  const newRamenComment = document.querySelector("#new-comment")
+  
+  // take form information and display in #ramen-deatil
+  const ramenNameDetail = document.querySelector('.name');
+  ramenNameDetail.textContent = newRamenName.value;  
+  const ramenRestDetail = document.querySelector('.restaurant');
+  ramenRestDetail.textContent = newRamenRest.value;
+  const ramenImgDetail = document.querySelector('.detail-image');
+  ramenImgDetail.src = newRamenImg.value;
+  const ramenRatingDetail = document.querySelector("#rating-display");
+  ramenRatingDetail.textContent = newRamenRating.value;
+  const ramenCommentDetail = document.querySelector("#comment-display");
+  ramenCommentDetail.textContent = newRamenComment.value;
+  
+
 })); // closes addSubmitListener declaration
+};
 
 
 const displayRamens = function(ramenData) {
@@ -56,7 +87,7 @@ const main = function() {
     }) //closes forEach
   }); //closes last .then, finished using data
 
-//addSubmitListener call will go here
+addSubmitListener(); //call will go here
 
 };//closes main function
 
@@ -84,19 +115,16 @@ export {
 
 
 
-// ASYNC VERSION
+// ASYNC/AWAIT VERSION
 
 /*
 async function main() {
   const response = await fetch("http://localhost:3000/ramens"); // requests data from server to get all ramen objects, NO ; HERE
   const ramenData = await response.json();
   //.then((response) => response.json()) // if connection sucessful, then take info and turn it into json
-    displayRamens(ramenData)
-    handleClick(ramenData)
-
  */
 
-// NON ASYNC VERSION
+// NON ASYNC/AWAIT VERSION
 /*
 fetch("http://localhost:3000/ramens")
     
@@ -107,14 +135,7 @@ fetch("http://localhost:3000/ramens")
 
 
 
-// new-ramen form to retrieve input info from user is in HTML
-// attach event listener to new-ramen form using addSubmitListener
-// after a submit, add it to #ramen-menu div
-// OK if it goes away on refresh
 
-
-
-//json-server db.json or modify path
 
 
 //NOTES:
@@ -122,16 +143,14 @@ fetch("http://localhost:3000/ramens")
     // main () should invoke displayRamens and addSubmitListener after DOM has loaded 
 
 
-    // displayRamens() requests data from the server to get ramen objects 
-      //then display ramens w/ <img> in div #ramen-menu
+    // DONE displayRamens() requests data from the server to get ramen objects //then display ramens w/ <img> in div #ramen-menu
 
-      // handleClick() => a call backfunction uesd to see all info when img clicked
-        //display in #ramen-detail div
+      // DONE handleClick() => a call backfunction uesd to see all info when img clicked //display in #ramen-detail div
 
       // addSubmitListener() => a callback to be attached to new-ramen form
         //add new ramen from form to #ramen-menu div
 
-
+  // to access JSON server: json-server db.json or modify path
 
 
 /*
@@ -140,6 +159,7 @@ ADVANCED DELIVERABLES
 1. see details for first ramen as soon as page loads w/o clicking on it
 2. update rating and comment for a ramen by submitting a form. Refelct changes on the frontend
 3. delete button/function - removed from ramen-menu and isnt displayed in ramen-detail
+
 4.Extra Advanced Deliverables
       You'll need these endpoints for the advanced deliverables:
 
