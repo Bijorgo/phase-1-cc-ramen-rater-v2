@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", event => {
         "rating": event.target['new-rating'].value,
         "comment": event.target['new-comment'].value,
       }); // closes displayRamens with object passed
-
     })); //closes eventListener
   }; // closes addSubmitListener declaration
 
@@ -53,6 +52,7 @@ document.addEventListener("DOMContentLoaded", event => {
       // callback function sets information to correct tags in #ramen-datail
     }); //closes event listener  
   }; // closes displayRamens
+
 
   // main function fetches API data, then dictates what to do with data
   const main = function() {
@@ -77,25 +77,58 @@ document.addEventListener("DOMContentLoaded", event => {
 
   main(); 
   // calls main function so it runs after DOM is loaded
+ 
+  /*
+  // I can't get anything to work if I leave this in, but it was pre-written here
+  // Export functions for testing 
+  export {
+    displayRamens,
+    addSubmitListener,
+    handleClick,
+    main,
+  }; //closes export
+  */
 
 }); // closes DOMContentLoaded event listener 
 
 
 
+
+// ASSIGNMENT NOTES:
+
+  //need:
+    // main () should invoke displayRamens and addSubmitListener after DOM has loaded 
+
+
+    // DONE displayRamens() requests data from the server to get ramen objects //then display ramens w/ <img> in div #ramen-menu
+
+      // DONE handleClick() => a call backfunction uesd to see all info when img clicked //display in #ramen-detail div
+
+      // addSubmitListener() => a callback to be attached to new-ramen form
+        //add new ramen from form to #ramen-menu div
+
+  // to access JSON server: json-server db.json or modify path
+
+
 /*
-// Export functions for testing 
-export {
-  displayRamens,
-  addSubmitListener,
-  handleClick,
-  main,
-}; // closes export
+ADVANCED DELIVERABLES
 
+1. see details for first ramen as soon as page loads w/o clicking on it
+2. update rating and comment for a ramen by submitting a form. Refelct changes on the frontend
+3. delete button/function - removed from ramen-menu and isnt displayed in ramen-detail
+
+4.Extra Advanced Deliverables
+      You'll need these endpoints for the advanced deliverables:
+
+      POST /ramens
+      DELETE /ramens/:id
+      PATCH /ramens/:id
+      As a user, I can:
+
+      persist my updates to a ramen's rating and comment. (PATCH request)
+      persist new ramens that I create (POST request)
+      persist any ramen deletions (DELETE request)
 */
-
-
-
-
 
 // ASYNC/AWAIT VERSION
 
@@ -114,25 +147,6 @@ fetch("http://localhost:3000/ramens")
     
     .then(ramenData => {
 */
-
-
-
-
-
-
-//NOTES:
-  //need:
-    // main () should invoke displayRamens and addSubmitListener after DOM has loaded 
-
-
-    // DONE displayRamens() requests data from the server to get ramen objects //then display ramens w/ <img> in div #ramen-menu
-
-      // DONE handleClick() => a call backfunction uesd to see all info when img clicked //display in #ramen-detail div
-
-      // addSubmitListener() => a callback to be attached to new-ramen form
-        //add new ramen from form to #ramen-menu div
-
-  // to access JSON server: json-server db.json or modify path
 
 
   // ALT FOR FORM DISPLAY
@@ -157,24 +171,4 @@ fetch("http://localhost:3000/ramens")
     const ramenCommentDetail = document.querySelector("#comment-display");
     ramenCommentDetail.textContent = newRamenComment.value;
     */
-
-
-/*
-ADVANCED DELIVERABLES
-
-1. see details for first ramen as soon as page loads w/o clicking on it
-2. update rating and comment for a ramen by submitting a form. Refelct changes on the frontend
-3. delete button/function - removed from ramen-menu and isnt displayed in ramen-detail
-
-4.Extra Advanced Deliverables
-      You'll need these endpoints for the advanced deliverables:
-
-      POST /ramens
-      DELETE /ramens/:id
-      PATCH /ramens/:id
-      As a user, I can:
-
-      persist my updates to a ramen's rating and comment. (PATCH request)
-      persist new ramens that I create (POST request)
-      persist any ramen deletions (DELETE request)
-*/
+   
