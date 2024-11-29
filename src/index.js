@@ -1,113 +1,97 @@
 // index.js
 document.addEventListener("DOMContentLoaded", event => {
 
-// Callbacks
-const handleClick = (ramenData) => {
-    // this callback function handles organizing data to appear in #ramen-detail when called 
-    //set name
+  // this callback function handles organizing data to appear in #ramen-detail when called
+  const handleClick = (ramenData) => {
+      //set name
     const ramenNameDetail = document.querySelector('.name');
-  ramenNameDetail.textContent = ramenData.name;
-  //set img
-  const ramenImgDetail = document.querySelector('.detail-image');
-  ramenImgDetail.src = ramenData.image;
-  //set restaurant
-  const ramenRestDetail = document.querySelector('.restaurant');
-  ramenRestDetail.textContent = ramenData.restaurant;
-  //set rating
-  const ramenRatingDetail = document.querySelector("#rating-display");
-  ramenRatingDetail.textContent = ramenData.rating;
-  //set comment 
-  const ramenCommentDetail = document.querySelector("#comment-display");
-  ramenCommentDetail.textContent = ramenData.comment;
+    ramenNameDetail.textContent = ramenData.name;
+    //set img
+    const ramenImgDetail = document.querySelector('.detail-image');
+    ramenImgDetail.src = ramenData.image;
+    //set restaurant
+    const ramenRestDetail = document.querySelector('.restaurant');
+    ramenRestDetail.textContent = ramenData.restaurant;
+    //set rating
+    const ramenRatingDetail = document.querySelector("#rating-display");
+    ramenRatingDetail.textContent = ramenData.rating;
+    //set comment 
+    const ramenCommentDetail = document.querySelector("#comment-display");
+    ramenCommentDetail.textContent = ramenData.comment;
+  }; // closes handleClick declaration
 
-}; // closes handleClick declaration
+  // this function will, upon submit, take input from form, display on menu, and display all info upon upon click
+  const addSubmitListener = () => {
+    const newRamenForm = document.querySelector("#new-ramen");
+    // this function listens for the submit event and dictates what to do
+    newRamenForm.addEventListener("submit", (event => {
+      event.preventDefault(); // prevents redirect of page
+      // take form info(as an object), pass through displayRamens() to add to menu
+      displayRamens({
+        "name": event.target['name'].value,
+        // since displayRamens calls handleClick, we need the following information to display in #ramen-detail upon click
+        "restaurant": event.target['new-restaurant'].value,
+        "image": event.target['new-image'].value,
+        "rating": event.target['new-rating'].value,
+        "comment": event.target['new-comment'].value,
+      }); // closes displayRamens with object passed
 
-const addSubmitListener = function(){
-
-  const newRamenForm = document.querySelector("#new-ramen");
-
-  newRamenForm.addEventListener("submit", (event => {
-    event.preventDefault();
-    // take form info(as an object), pass through displayRamens() to add to menu
-    displayRamens({
-      "name": event.target['name'].value,
-      "restaurant": event.target['new-restaurant'].value,
-      "image": event.target['new-image'].value,
-      "rating": event.target['new-rating'].value,
-      "comment": event.target['new-comment'].value,
-    }); // close displayRamens with object passed
-
-
-    // take info, pass through handleClick() to display in #ramen-detail-this happens b/c handleClick is called in displayRamens
-
-
+    })); //closes eventListener
+  }; // closes addSubmitListener declaration
 
 
-    //const take information in the form
-    //use form's information to set new information in #ramen-detail, rating, and comment
-      //add img to div #ramen-menu and make it clickable somehow 
+  const displayRamens = function(ramenData) {
+      //handle data to display ramens w/ <img> in div #ramen-menu
+    const ramenMenu = document.querySelector("#ramen-menu");
+    const ramenMenuImg = document.createElement("img");
+    ramenMenuImg.src = ramenData.image
+    ramenMenu.append(ramenMenuImg);
+      // append ramenMenuImg, which now displays the img of each element, as a child of #ramen-menu
+    ramenMenuImg.addEventListener("click", (event) => {
+      // add event listener here to listen for clicks on individual images and keep data together
+      handleClick(ramenData)
+      // callback function sets information to correct tags in #ramen-datail
+    }); //closes event listener  
+  }; // closes displayRamens
 
+  // main function fetches API data, then dictates what to do with data
+  const main = function() {
+    fetch("http://localhost:3000/ramens")
+      // retrieve data from API
+    .then(response => {
+      return response.json();
+      // parse data to JavaScript Object
+    })
+    .then(ramenData => {
+      // start using data from API
+      ramenData.forEach(element => {
+        displayRamens(element);
+        // iterate over object and run displayRamens to start displaying API imgs in #ramen-menu
+          //displayRamens contains a callback function that will display data in #ramen-menu when img is clicked 
+      }) //closes forEach
+    }); //closes last .then, finished using data
 
+    addSubmitListener(); // funtion call listens for form submission, dictates when and where to display input information
 
-    
-  
+  };//closes main function
 
-})); // closes addSubmitListener declaration
-};
-
-
-const displayRamens = function(ramenData) {
-    //handle data to display ramens w/ <img> in div #ramen-menu
-  const ramenMenu = document.querySelector("#ramen-menu");
-  const ramenMenuImg = document.createElement("img");
-  ramenMenuImg.src = ramenData.image
-  ramenMenu.append(ramenMenuImg);
-    // append ramenMenuImg, which is now displays the img of each element, as a child of #ramen-menu
-  ramenMenuImg.addEventListener("click", (event) => {
-    // add event listener here to listen for clicks on individual images and keep data together
-    handleClick(ramenData)
-    // callback function sets information to correct tags in #ramen-datail
-  }); //closes event listener  
-}; // closes displayRamens
-
-const main = function() {
-  fetch("http://localhost:3000/ramens")
-    // retrieve data from API
-  .then(response => {
-    return response.json();
-    // parse data to JavaScript Object
-  })
-  .then(ramenData => {
-    // start using data from API
-    ramenData.forEach(element => {
-      displayRamens(element);
-      // iterate over object and run displayRamens to start displaying imgs in #ramen-menu
-    }) //closes forEach
-  }); //closes last .then, finished using data
-
-addSubmitListener(); //call will go here
-
-};//closes main function
-
-main(); 
-// calls main function so it runs after DOM is loaded
+  main(); 
+  // calls main function so it runs after DOM is loaded
 
 }); // closes DOMContentLoaded event listener 
 
 
 
-
-// Export functions for testing     DONT DELETE THIS
 /*
+// Export functions for testing 
 export {
   displayRamens,
   addSubmitListener,
   handleClick,
   main,
 }; // closes export
+
 */
-
-
 
 
 
