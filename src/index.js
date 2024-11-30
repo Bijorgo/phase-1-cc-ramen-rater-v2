@@ -1,3 +1,5 @@
+//const { formNode } = require("happy-dom/cjs/PropertySymbol.cjs");  // I don't know where this came from???
+
 // index.js
 document.addEventListener("DOMContentLoaded", event => {
 
@@ -35,6 +37,7 @@ document.addEventListener("DOMContentLoaded", event => {
         "rating": event.target['new-rating'].value,
         "comment": event.target['new-comment'].value,
       }); // closes displayRamens with object passed
+      document.querySelector("#new-ramen").reset();
     })); //closes eventListener
   }; // closes addSubmitListener declaration
 
@@ -64,6 +67,22 @@ document.addEventListener("DOMContentLoaded", event => {
     })
     .then(ramenData => {
       // start using data from API
+      // display first ramen in #ramen-detail upon loading 
+      const ramenNameDetail = document.querySelector('.name');
+      ramenNameDetail.textContent = ramenData[0]['name'].value;
+      //set img
+      const ramenImgDetail = document.querySelector('.detail-image');
+      ramenImgDetail.src = ramenData[0]['image']
+      //set restaurant
+      const ramenRestDetail = document.querySelector('.restaurant');
+      ramenRestDetail.textContent = ramenData[0]['restaurant'];
+      //set rating
+      const ramenRatingDetail = document.querySelector("#rating-display");
+      ramenRatingDetail.textContent =ramenData[0]['rating']
+      //set comment 
+      const ramenCommentDetail = document.querySelector("#comment-display");
+      ramenCommentDetail.textContent = ramenData[0]['comment'];
+
       ramenData.forEach(element => {
         displayRamens(element);
         // iterate over object and run displayRamens to start displaying API imgs in #ramen-menu
