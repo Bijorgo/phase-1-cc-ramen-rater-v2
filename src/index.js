@@ -35,9 +35,9 @@ document.addEventListener("DOMContentLoaded", event => {
         "restaurant": event.target['new-restaurant'].value,
         "image": event.target['new-image'].value,
         "rating": event.target['new-rating'].value,
-        "comment": event.target['new-comment'].value,
+        "comment": event.target['new-comment'].value,        
       }); // closes displayRamens with object passed
-      document.querySelector("#new-ramen").reset();
+      document.querySelector("#new-ramen").reset();  // after form submission, clear the form inputs
     })); //closes eventListener
   }; // closes addSubmitListener declaration
 
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", event => {
       // start using data from API
       // display first ramen in #ramen-detail upon loading 
       const ramenNameDetail = document.querySelector('.name');
-      ramenNameDetail.textContent = ramenData[0]['name'].value;
+      ramenNameDetail.textContent = ramenData[0]['name'];
       //set img
       const ramenImgDetail = document.querySelector('.detail-image');
       ramenImgDetail.src = ramenData[0]['image']
@@ -83,10 +83,31 @@ document.addEventListener("DOMContentLoaded", event => {
       const ramenCommentDetail = document.querySelector("#comment-display");
       ramenCommentDetail.textContent = ramenData[0]['comment'];
 
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "Remove";
+      delBtn.addEventListener("click", (event => {
+        ramenNameDetail.textContent = "Insert Name Here"
+        ramenImgDetail.src = "./assets/image-placeholder.jpg"
+        ramenRestDetail.textContent = "Insert Restaurant Here"
+        ramenRatingDetail.textContent = "Insert rating here"
+        ramenCommentDetail.textContent = "Insert comment here"
+      }));
+      document.querySelector("#ramen-detail").append(delBtn);
+
       ramenData.forEach(element => {
         displayRamens(element);
         // iterate over object and run displayRamens to start displaying API imgs in #ramen-menu
           //displayRamens contains a callback function that will display data in #ramen-menu when img is clicked 
+        /*
+          // could place a delete/remove function here, but it's pretty ugly 
+
+          const delBtn = document.createElement("button");
+          delBtn.textContent = "remove";
+          delBtn.addEventListener("click", (event => {
+            console.log("put button here!!!")
+          }));
+          document.querySelector("#ramen-menu").append(delBtn);
+        */
       }) //closes forEach
     }); //closes last .then, finished using data
 
@@ -110,9 +131,22 @@ document.addEventListener("DOMContentLoaded", event => {
 
 }); // closes DOMContentLoaded event listener 
 
+/*
+const delBtn = document.createElement("button");
+delBtn.textContent = "X";
+delBtn.addEventListener("click", (event => {
+  event.target.remove();
+}));
+*/
+/*
 
+const delBtn = document.createElement("button");
+      delBtn.textContent = "X";
+      delBtn.addEventListener("click", (event => {
+        console.log("put button here!!!")
+      }));
 
-
+*/
 // ASSIGNMENT NOTES:
 
   //need:
